@@ -60,7 +60,7 @@ export const metadata = {
   description:
     "Discover top UK jobs across IT, healthcare, finance, engineering & more at Aidifys.com",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/Logo.jpg",
   },
   openGraph: {
     title: "Aidifys – Hiring",
