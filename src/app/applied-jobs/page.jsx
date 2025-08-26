@@ -25,13 +25,21 @@ const AppliedJobs = () => {
         const fetchJobs = async () => {
             setLoading(true);
             try {
-                const token = localStorage.getItem('userToken');
-                const response = await fetch(`${BASE_URL}/user-applied-jobs?page=${currentPage + 1}&limit=${itemsPerPage}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
+                let token = null;
+
+                if (typeof window !== "undefined") {
+                    token = localStorage.getItem("userToken");
+                }
+
+                const response = await fetch(
+                    `${BASE_URL}/user-applied-jobs?page=${currentPage + 1}&limit=${itemsPerPage}`,
+                    {
+                        headers: {
+                            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
 
                 if (response.ok) {
                     const { jobs: fetchedJobs, totalPages, totalJobs } = await response.json();
@@ -51,6 +59,7 @@ const AppliedJobs = () => {
 
         fetchJobs();
     }, [currentPage]);
+
 
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);

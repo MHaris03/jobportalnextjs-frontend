@@ -22,27 +22,33 @@ const Card = ({ data }) => {
     slug,
   } = data;
 
-   const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     try {
-      const likedJobs = localStorage.getItem("likedJobs");
-      const parsedLikedJobs = likedJobs ? JSON.parse(likedJobs) : [];
+      if (typeof window !== "undefined") {
+        const likedJobs = localStorage.getItem("likedJobs");
+        const parsedLikedJobs = likedJobs ? JSON.parse(likedJobs) : [];
 
-      if (Array.isArray(parsedLikedJobs)) {
-        setIsLiked(parsedLikedJobs.includes(slug));
-      } else {
-        setIsLiked(false);
-        localStorage.setItem("likedJobs", JSON.stringify([]));
+        if (Array.isArray(parsedLikedJobs)) {
+          setIsLiked(parsedLikedJobs.includes(slug));
+        } else {
+          setIsLiked(false);
+          localStorage.setItem("likedJobs", JSON.stringify([]));
+        }
       }
     } catch (error) {
       console.error("Error parsing likedJobs from localStorage:", error);
       setIsLiked(false);
-      localStorage.setItem("likedJobs", JSON.stringify([]));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("likedJobs", JSON.stringify([]));
+      }
     }
-  }, [slug, isLiked]);
+  }, [slug]); 
 
   const handleLike = async () => {
+    if (typeof window === "undefined") return; 
+
     const token = localStorage.getItem("userToken");
     const userId = localStorage.getItem("UserId");
 
@@ -59,8 +65,8 @@ const Card = ({ data }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          slug: slug,
-          userId: userId,
+          slug,
+          userId,
           action: isLiked ? "unlike" : "like",
         }),
       });
@@ -70,14 +76,18 @@ const Card = ({ data }) => {
       if (response.ok && data.success) {
         setIsLiked(!isLiked);
 
-        let likedJobs = JSON.parse(localStorage.getItem("likedJobs")) || [];
+        let likedJobs =
+          JSON.parse(localStorage.getItem("likedJobs") || "[]") || [];
+
         if (isLiked) {
-          likedJobs = likedJobs.filter((slug) => slug !== slug);
-          toast.success('Job remove from saved history successfully!');
+          // ✅ fix bug: was filtering against itself
+          likedJobs = likedJobs.filter((jobSlug) => jobSlug !== slug);
+          toast.success("Job removed from saved history successfully!");
         } else {
           likedJobs.push(slug);
-          toast.success("Job saved ! Successfully");
+          toast.success("Job saved successfully!");
         }
+
         localStorage.setItem("likedJobs", JSON.stringify(likedJobs));
       } else {
         console.error("Error:", data.message || "Failed to like/unlike the job.");
@@ -86,6 +96,7 @@ const Card = ({ data }) => {
       console.error("Error liking/unliking job:", error);
     }
   };
+
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
