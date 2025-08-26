@@ -38,7 +38,8 @@ const UpdateJob = () => {
   }, [id]);
 
   const onSubmit = async (data) => {
-    const userId = localStorage.getItem("UserId");
+    // const userId = localStorage.getItem("UserId");
+    const userId = typeof window !== 'undefined' ? localStorage.getItem('UserId') : null;
     data.skills = selectedOptions.map((option) => option.value);
     data._id = id;
     data.userId = userId;

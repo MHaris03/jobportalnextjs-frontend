@@ -24,9 +24,11 @@ const Navbar = () => {
 
 
     useEffect(() => {
-        const storedUserName = localStorage.getItem('userName');
-        if (storedUserName) {
-            setUserName(storedUserName);
+        if (typeof window !== "undefined") {
+            const storedUserName = localStorage.getItem("userName");
+            if (storedUserName) {
+                setUserName(storedUserName);
+            }
         }
     }, []);
 
