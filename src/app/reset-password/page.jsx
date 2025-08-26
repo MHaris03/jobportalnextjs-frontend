@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
-// import { BASE_URL } from "../utils/BASE_URL"; 
+import { BASE_URL } from "@/utils/BASE_URL";
 
 const ResertPass = () => {
   const [password, setPassword] = useState("");
@@ -20,14 +20,27 @@ const ResertPass = () => {
     setShowPassword(!showPassword);
   };
 
+  // useEffect(() => {
+  //   const resetToken = searchParams.get("token");
+  //   if (resetToken) {
+  //     setToken(resetToken);
+  //   } else {
+  //     toast.error("No token found in URL");
+  //   }
+  // }, [searchParams]);
+
   useEffect(() => {
-    const resetToken = searchParams.get("token");
-    if (resetToken) {
-      setToken(resetToken);
-    } else {
-      toast.error("No token found in URL");
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const resetToken = params.get("token");
+      if (resetToken) {
+        setToken(resetToken);
+      } else {
+        toast.error("No token found in URL");
+      }
     }
-  }, [searchParams]);
+  }, []);
+
 
   const handlePasswordReset = async (e) => {
     e.preventDefault();
