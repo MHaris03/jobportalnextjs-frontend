@@ -1,6 +1,6 @@
 'use-client';
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import Swal from 'sweetalert2';
 import ForgotPass from "./Forgotpassword";

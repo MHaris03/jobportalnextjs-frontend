@@ -2,9 +2,9 @@
 import JobPostingData from '@/pages/sidebar/JobpostingDate';
 import Location from '@/pages/sidebar/Location';
 import Salary from '@/pages/sidebar/Salary';
-import WorkExperience from '@/pages/sidebar/workExperince';
 import Employments from '@/pages/sidebar/Employments';
 import React from 'react';
+import WorkExperience from '@/pages/sidebar/workExperince';
 
 
 const Sidebar = ({ handleChange, handleClick }) => {

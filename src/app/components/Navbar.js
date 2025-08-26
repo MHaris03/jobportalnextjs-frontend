@@ -7,8 +7,8 @@ import { FaBars } from "react-icons/fa6";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import Swal from 'sweetalert2';
 import { FaTimes } from "react-icons/fa";
-import Login from "@/app/components/Login";
 import SignUp from "@/app/components/Signup";
+import Login from "./Login";
 
 
 const Navbar = () => {
