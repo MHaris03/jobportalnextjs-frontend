@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Aidifys – Hiring",
-  description: "Aidifys is a modern job platform to find, post, and save jobs online.",
+  description: "Discover top UK jobs across IT, healthcare, finance, engineering & more at Aidifys.com.Browse full- time, part-time, remote & freelance job opportunities in major cities like London, Manchester & Birmingham.Start your job search today!",
 };
 
 export default function RootLayout({ children }) {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/Logo.jpg" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
