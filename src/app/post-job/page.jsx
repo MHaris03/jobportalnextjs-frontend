@@ -52,8 +52,10 @@ const CreateJob = () => {
   };
 
   const onSubmit = async (data) => {
-    const userId = localStorage.getItem('UserId');
-    const useremail = localStorage.getItem('userEmail');
+    // const userId = localStorage.getItem('UserId');
+    const userId = typeof window !== 'undefined' && localStorage.getItem('UserId');
+    // const useremail = localStorage.getItem('userEmail');
+    const useremail = typeof window !== 'undefined' && localStorage.getItem('userEmail');
 
     if (!image) {
       toast.error('Image upload is required!');

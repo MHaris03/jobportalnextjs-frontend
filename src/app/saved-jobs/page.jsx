@@ -21,7 +21,8 @@ const SavedJobPage = () => {
   const itemsPerPage = 10;
 
   const fetchUserInfo = async () => {
-    const loggedInUserEmail = localStorage.getItem('userEmail');
+    // const loggedInUserEmail = localStorage.getItem('userEmail');
+    const loggedInUserEmail = typeof window !== 'undefined' && localStorage.getItem('userEmail');
     if (!loggedInUserEmail) {
       setIsLoading(false);
       return;
@@ -55,8 +56,10 @@ const SavedJobPage = () => {
   }, []);
 
   const handleLike = async (slug) => {
-    const token = localStorage.getItem('userToken');
-    const userId = localStorage.getItem('UserId');
+    // const token = localStorage.getItem('userToken');
+    const token = typeof window !== 'undefined' && localStorage.getItem('userToken');
+    // const userId = localStorage.getItem('UserId');
+    const userId = typeof window !== 'undefined' && localStorage.getItem('UserId');
 
     if (!userId || !token) {
       toast.error('Please log in to like/unlike this job.');

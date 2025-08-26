@@ -22,10 +22,13 @@ const MyJobs = () => {
   const [DateRange, setDateRange] = useState("all");
   const itemsPerPage = 20;
 
+
   useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail");
-    if (userEmail) {
-      setUserEmail(userEmail);
+    if (typeof window !== "undefined") {
+      const userEmail = localStorage.getItem("userEmail");
+      if (userEmail) {
+        setUserEmail(userEmail);
+      }
     }
   }, []);
 
